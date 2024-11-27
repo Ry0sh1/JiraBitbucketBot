@@ -13,6 +13,9 @@ import java.net.URL;
 import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 import java.util.Base64;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PullRequests implements ServerCommand {
 

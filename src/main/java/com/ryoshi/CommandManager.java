@@ -1,5 +1,6 @@
 package com.ryoshi;
 
+import com.ryoshi.commands.Initialize;
 import com.ryoshi.commands.PullRequests;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -15,6 +16,7 @@ public class CommandManager {
         this.commands = new ConcurrentHashMap<>();
 
         this.commands.put("pr", new PullRequests());
+        this.commands.put("initialize", new Initialize());
     }
 
     public boolean perform(String command, Member m, TextChannel channel, Message message){

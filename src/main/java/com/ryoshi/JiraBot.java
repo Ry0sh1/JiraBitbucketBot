@@ -1,9 +1,5 @@
 package com.ryoshi;
 
-
-import com.ryoshi.commands.PullRequests;
-import com.ryoshi.models.PullRequest;
-import com.ryoshi.models.Response;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -11,10 +7,8 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import javax.security.auth.login.LoginException;
+
 
 public class JiraBot {
 
@@ -50,10 +44,13 @@ public class JiraBot {
         //Listener
 
         JDA jiraBot = builder.build();
+
+        //ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        //HOLY GRAIL
+        //scheduler.scheduleAtFixedRate(runFast(), 0, 3,  TimeUnit.SECONDS);
     }
 
     public CommandManager getCmdMan() {
         return cmdMan;
     }
-
 }
