@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PullRequest {
-
     private String id;
     private String title;
     private String description;
