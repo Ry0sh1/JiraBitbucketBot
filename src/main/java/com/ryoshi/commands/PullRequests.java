@@ -3,12 +3,12 @@ package com.ryoshi.commands;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ryoshi.ServerCommand;
+import com.ryoshi.models.MergeResult;
 import com.ryoshi.models.Response;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
-import java.lang.reflect.Member;
 import java.net.URL;
 import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
@@ -35,8 +35,7 @@ public class PullRequests implements ServerCommand {
 
             return inputLine;
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -59,13 +58,30 @@ public class PullRequests implements ServerCommand {
         eb.setTitle("Pull Requests");
         eb.setDescription("Wir haben momentan noch " + response.getSize() + " offene Pull Requests:");
 
-        for(int i = 0; i < Integer.parseInt(response.getSize()); i++){
+        for (int i = 0; i < Integer.parseInt(response.getSize()); i++) {
             eb.addField(response.getValues()[i].getTitle(),
                     response.getValues()[i].getAuthor().getUser().getDisplayName() +
-                   " / " + response.getValues()[i].getAuthor().getUser().getName() +
-                    '\n' + response.getValues()[i].getLinks().getSelf()[0].getHref() + '\n', false);
+                    " / " + response.getValues()[i].getAuthor().getUser().getName() +
+                    '\n' + response.getValues()[i].getLinks().getSelf()[0].getHref() +
+                    '\n' + returnSentenceOnConflicts(response.getValues()[i].getProperties().getMergeResult()) +
+                    returnExclamationMarkOnConflicts(response.getValues()[i].getProperties().getMergeResult()) + "\n\n", false);
+
         }
 
         channel.sendMessageEmbeds(eb.build()).queue();
+    }
+
+    private String returnSentenceOnConflicts(MergeResult result){
+        if (result.getOutcome().equals("CLEAN")){
+            return "Dieser Pull Request hat keine Merge-Konflikte.";
+        }
+        else return "Dieser Pull Request hat noch offene Merge-Konflikte.";
+    }
+
+    private String returnExclamationMarkOnConflicts(MergeResult result){
+        if (result.getOutcome().equals("CLEAN")){
+            return "";
+        }
+        else return ":exclamation:";
     }
 }

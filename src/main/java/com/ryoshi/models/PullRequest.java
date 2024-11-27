@@ -19,5 +19,6 @@ public class PullRequest {
     private String updatedDate;
     private Author author;
     private Link links;
+    private Properties properties;
 
 }
