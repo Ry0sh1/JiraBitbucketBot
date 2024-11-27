@@ -50,22 +50,6 @@ public class JiraBot {
         //Listener
 
         JDA jiraBot = builder.build();
-        PullRequests prGetter = new PullRequests();
-
-        //Gson
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setPrettyPrinting();
-
-        Gson gson = gsonBuilder.create();
-        Response response = gson.fromJson(prGetter.getPullRequests(), Response.class);
-
-        System.out.println("Wir haben momentan noch " + response.getSize() + " offene Pull-Requests:");
-        System.out.println("==================");
-        System.out.println("Title: " + response.getValues()[0].getTitle());
-        System.out.println("Status: " + response.getValues()[0].getState());
-        System.out.println("Author: " + response.getValues()[0].getAuthor().getUser().getDisplayName() + " / " +
-                response.getValues()[0].getAuthor().getUser().getName());
-        System.out.println("Link: " + response.getValues()[0].getLinks().getSelf()[0].getHref());
     }
 
     public CommandManager getCmdMan() {

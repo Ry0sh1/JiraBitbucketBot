@@ -1,11 +1,20 @@
 package com.ryoshi.commands;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.ryoshi.ServerCommand;
+import com.ryoshi.models.Response;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+
+import java.lang.reflect.Member;
 import java.net.URL;
 import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 import java.util.Base64;
 
-public class PullRequests {
+public class PullRequests implements ServerCommand {
 
     public String getPullRequests() {
         String httpsURL = "https://git.swl.informatik.uni-oldenburg.de//rest/api/latest/projects/SWP2024/repos/SWP2024f/pull-requests";
@@ -22,10 +31,6 @@ public class PullRequests {
             String inputLine;
             inputLine = br.readLine();
 
-           /* while ((inputLine = br.readLine()) != null){
-                System.out.println(inputLine);
-            }*/
-
             br.close();
 
             return inputLine;
@@ -36,5 +41,31 @@ public class PullRequests {
         }
 
         return null;
+    }
+
+
+    @Override
+    public void performCommand(net.dv8tion.jda.api.entities.Member m, TextChannel channel, Message message, String extraString) {
+        PullRequests prGetter = new PullRequests();
+
+        //Gson
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setPrettyPrinting();
+
+        Gson gson = gsonBuilder.create();
+        Response response = gson.fromJson(prGetter.getPullRequests(), Response.class);
+
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setTitle("Pull Requests");
+        eb.setDescription("Wir haben momentan noch " + response.getSize() + " offene Pull Requests:");
+
+        for(int i = 0; i < Integer.parseInt(response.getSize()); i++){
+            eb.addField(response.getValues()[i].getTitle(),
+                    response.getValues()[i].getAuthor().getUser().getDisplayName() +
+                   " / " + response.getValues()[i].getAuthor().getUser().getName() +
+                    '\n' + response.getValues()[i].getLinks().getSelf()[0].getHref() + '\n', false);
+        }
+
+        channel.sendMessageEmbeds(eb.build()).queue();
     }
 }
