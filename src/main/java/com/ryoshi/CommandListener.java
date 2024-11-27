@@ -17,6 +17,5 @@ public class CommandListener extends ListenerAdapter {
                 event.getChannel().sendMessage("Unbekannter command").complete().delete().queueAfter(5, TimeUnit.SECONDS);
             }
         }
-
     }
 }

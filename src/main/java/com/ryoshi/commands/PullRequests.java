@@ -19,6 +19,12 @@ import java.util.concurrent.TimeUnit;
 
 public class PullRequests implements ServerCommand {
 
+    /**
+     * Diese Methode zieht sich die JSON datei mit den ganzen daten von der BitBucket API
+     * die env USERNAME und PASSWORD sind hierbei für den Jira login
+     * @return
+     */
+
     public String getPullRequests() {
         String httpsURL = "https://git.swl.informatik.uni-oldenburg.de//rest/api/latest/projects/SWP2024/repos/SWP2024f/pull-requests";
         final String auth = System.getenv("USERNAME") + ":" + System.getenv("PASSWORD");
@@ -46,6 +52,14 @@ public class PullRequests implements ServerCommand {
     }
 
 
+    /**
+     * Diese Methode ist dafür verantwortlich die eigentliche PR Nachricht zu bauen und zu senden
+     * @param m Member von dem der Command kommt
+     * @param channel Channel in welchem die Nachricht versendet werden soll
+     * @param message
+     * @param extraString
+     */
+
     @Override
     public void performCommand(net.dv8tion.jda.api.entities.Member m, TextChannel channel, Message message, String extraString) {
         PullRequests prGetter = new PullRequests();
@@ -68,11 +82,19 @@ public class PullRequests implements ServerCommand {
                     '\n' + response.getValues()[i].getLinks().getSelf()[0].getHref() +
                     '\n' + returnSentenceOnConflicts(response.getValues()[i].getProperties().getMergeResult()) +
                     returnExclamationMarkOnConflicts(response.getValues()[i].getProperties().getMergeResult()) + "\n\n", false);
-
         }
+        //pingt die SWP2024F member da der Ping nicht effektiv ist, wenn man ihn im embed setzt
         channel.sendMessage("@SWP2024F").queue();
         channel.sendMessageEmbeds(eb.build()).queue();
     }
+
+
+    /**
+     * Gibt einen String zurück, wenn es bei dem jeweiligen PR einen Merge Konflikt gibt
+     * ist wichtig für die Formatierung des embeds
+     * @param result MergeResult aus dem PR der gecheckt werden soll
+     * @return String, ob ein Merge konfligt vorliegt oder nicht
+     */
 
     private String returnSentenceOnConflicts(MergeResult result){
         if (result.getOutcome().equals("CLEAN")){
@@ -80,6 +102,13 @@ public class PullRequests implements ServerCommand {
         }
         else return "Dieser Pull Request hat noch offene Merge-Konflikte.";
     }
+
+
+    /**
+     * Gibt einen Discord emoji in form eines ! als String aus, falls Mergekonflikte bestehen
+     * @param result MergeResult des zu checkenden PRs
+     * @return String eines Discord emojis, falls ein MergeKonflikt bestehen sollte
+     */
 
     private String returnExclamationMarkOnConflicts(MergeResult result){
         if (result.getOutcome().equals("CLEAN")){

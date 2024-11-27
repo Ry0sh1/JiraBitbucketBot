@@ -20,5 +20,4 @@ public class PullRequest {
     private Author author;
     private Link links;
     private Properties properties;
-
 }

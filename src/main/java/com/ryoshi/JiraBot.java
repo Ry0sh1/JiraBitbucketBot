@@ -28,7 +28,7 @@ public class JiraBot {
 
         JDABuilder builder = JDABuilder.createDefault(System.getenv("API_KEY"));
 
-        builder.setActivity(Activity.playing("Jona testet gerade"));
+        builder.setActivity(Activity.playing("Looking at Pull Requests"));
         builder.setStatus(OnlineStatus.ONLINE);
 
         builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
@@ -44,10 +44,6 @@ public class JiraBot {
         //Listener
 
         JDA jiraBot = builder.build();
-
-        //ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        //HOLY GRAIL
-        //scheduler.scheduleAtFixedRate(runFast(), 0, 3,  TimeUnit.SECONDS);
     }
 
     public CommandManager getCmdMan() {
