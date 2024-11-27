@@ -24,7 +24,6 @@ public class Initialize implements ServerCommand {
     private Runnable performPrCommand(Member m, TextChannel channel, Message message) {
         return () -> {
             CommandManager cmdMgr = new CommandManager();
-
             cmdMgr.perform("pr", m, channel, message);
         };
     }
