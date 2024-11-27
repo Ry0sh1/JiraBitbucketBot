@@ -67,7 +67,7 @@ public class PullRequests implements ServerCommand {
                     returnExclamationMarkOnConflicts(response.getValues()[i].getProperties().getMergeResult()) + "\n\n", false);
 
         }
-
+        channel.sendMessage("@SWP2024F").queue();
         channel.sendMessageEmbeds(eb.build()).queue();
     }
 
