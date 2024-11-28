@@ -1,6 +1,5 @@
 package com.ryoshi;
 
-
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -8,8 +7,8 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
-
 import javax.security.auth.login.LoginException;
+
 
 public class JiraBot {
 
@@ -29,8 +28,8 @@ public class JiraBot {
 
         JDABuilder builder = JDABuilder.createDefault(System.getenv("API_KEY"));
 
-        builder.setActivity(Activity.playing("On Work"));
-        builder.setStatus(OnlineStatus.IDLE);
+        builder.setActivity(Activity.playing("Looking at Pull Requests"));
+        builder.setStatus(OnlineStatus.ONLINE);
 
         builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
         builder.setChunkingFilter(ChunkingFilter.ALL);
@@ -50,5 +49,4 @@ public class JiraBot {
     public CommandManager getCmdMan() {
         return cmdMan;
     }
-
 }
