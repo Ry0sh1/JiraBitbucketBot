@@ -1,5 +1,7 @@
 package com.ryoshi;
 
+import com.ryoshi.listener.CommandListener;
+import com.ryoshi.listener.SlashCommandListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -40,6 +42,7 @@ public class JiraBot {
         //Command Manager
 
         builder.addEventListeners(new CommandListener());
+        builder.addEventListeners(new SlashCommandListener());
 
         //Listener
 
