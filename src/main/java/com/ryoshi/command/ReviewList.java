@@ -30,6 +30,8 @@ public class ReviewList implements ServerCommand {
         HashMap<String, Integer> reviewCounter = new HashMap<>();
         countReviews(reviewCounter, pastPullRequests.getSize(), pastPullRequests.getValues());
         countReviews(reviewCounter, currentPullRequests.getSize(), currentPullRequests.getValues());
+        reviewCounter.put("jhoffmann10",reviewCounter.get("jhoffmann10") - 3);
+        reviewCounter.put("jlammers3",reviewCounter.get("jlammers3") - 3);
 
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("Review List");
@@ -48,6 +50,9 @@ public class ReviewList implements ServerCommand {
             PullRequest currentPullRequest = pullRequests[i];
             for (int j = 0; j < currentPullRequest.getReviewers().length; j++){
                 User currentUser = currentPullRequest.getReviewers()[j].getUser();
+                if (currentUser.getSlug().equals("ljanssen15") || currentUser.getSlug().equals("dburghardt")){
+                    continue;
+                }
                 if (reviewCounter.containsKey(currentUser.getSlug())){
                     reviewCounter.put(currentUser.getSlug(),reviewCounter.get(currentUser.getSlug()) + 1);
                 }else {
