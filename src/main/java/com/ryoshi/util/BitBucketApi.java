@@ -45,7 +45,7 @@ public class BitBucketApi {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://git.swl.informatik.uni-oldenburg.de//rest/api/latest/projects/SWP2024/repos/SWP2024f/pull-requests?state=merged"))
+                    .uri(new URI("https://git.swl.informatik.uni-oldenburg.de/rest/api/latest/projects/SWP2024/repos/SWP2024f/pull-requests?state=merged&limit=500"))
                     .version(HttpClient.Version.HTTP_2)
                     .header("Content-Type", "application/json")
                     .header("Accept", "application/json")
